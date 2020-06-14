@@ -38,12 +38,14 @@ func main() {
 	root.Use(middleware.CorsHandler())
 	router.Register(root, wechat.User)
 	router.Register(root, rest.User)
+
 	server := &http.Server{
 		Addr:         ":3001",
 		Handler:      app,
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
 	}
+
 	g.Go(func() error {
 		return server.ListenAndServe()
 	})

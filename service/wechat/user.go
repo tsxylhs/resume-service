@@ -1,9 +1,6 @@
 package wechat
 
 import (
-	"crypto/aes"
-	"crypto/cipher"
-	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -96,7 +93,7 @@ func (t user) Login(form *model.User) error {
 
 		return err
 	}
-	t.Decrypt(form)
+	//	t.Decrypt(form)
 
 	user := &model.User{}
 	if _, err := cs.Sql.Where("open_id = ?", form.OpenId).Get(user); err != nil {
@@ -107,7 +104,7 @@ func (t user) Login(form *model.User) error {
 		// 用户不存在  新建用户再返回
 		// 新建时，给usrname 一个初始值
 		form.Base.BeforeInsert()
-		form.Username = form.NickName
+
 		if err := t.Save(form); err != nil {
 
 			return err
@@ -117,35 +114,36 @@ func (t user) Login(form *model.User) error {
 	}
 	return nil
 }
-func (t user) Decrypt(form *model.User) error {
-	aesk, err := base64.StdEncoding.DecodeString(form.SessionKey)
-	if err != nil {
-		return err
-	}
-	cipherText, err := base64.StdEncoding.DecodeString(form.EncryptedData)
-	if err != nil {
-		return err
-	}
-	ivBytes, err := base64.StdEncoding.DecodeString(form.Iv)
-	if err != nil {
-		return err
-	}
-	block, err := aes.NewCipher(aesk)
-	if err != nil {
-		return err
-	}
-	mode := cipher.NewCBCDecrypter(block, ivBytes)
-	mode.CryptBlocks(cipherText, cipherText)
-	cipherText = pkcs7Unpad(cipherText, block.BlockSize())
-	if err != nil {
-		return err
-	}
-	err = json.Unmarshal(cipherText, &form)
-	if err != nil {
-		return err
-	}
-	return nil
-}
+
+//func (t user) Decrypt(form *model.User) error {
+//	aesk, err := base64.StdEncoding.DecodeString(form.SessionKey)
+//	if err != nil {
+//		return err
+//	}
+//	cipherText, err := base64.StdEncoding.DecodeString(form.EncryptedData)
+//	if err != nil {
+//		return err
+//	}
+//	ivBytes, err := base64.StdEncoding.DecodeString(form.Iv)
+//	if err != nil {
+//		return err
+//	}
+//	block, err := aes.NewCipher(aesk)
+//	if err != nil {
+//		return err
+//	}
+//	mode := cipher.NewCBCDecrypter(block, ivBytes)
+//	mode.CryptBlocks(cipherText, cipherText)
+//	cipherText = pkcs7Unpad(cipherText, block.BlockSize())
+//	if err != nil {
+//		return err
+//	}
+//	err = json.Unmarshal(cipherText, &form)
+//	if err != nil {
+//		return err
+//	}
+//	return nil
+//}
 func pkcs7Unpad(data []byte, blockSize int) []byte {
 
 	if blockSize <= 0 {

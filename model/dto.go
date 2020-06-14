@@ -14,14 +14,17 @@ type Updatebook struct {
 }
 type ApplysVo struct {
 	Base      `xorm:"extends"`
-	Num       string  `json:"num"`
-	Name      string  `json:"name"`
-	Class     string  `json:"class"`
-	School    string  `json:"school"`
-	Phone     string  `json:"phone"`
-	LibraryId int64   `json:"libraryId,string"`
-	UserId    int64   `json:"userId,string"`
-	Site      string  `json:"site"`
-	Time      string  `json:"time"`
-	Library   Library `xorm:"-" json:"library"`
+	Num       string `json:"num"`
+	Name      string `json:"name"`
+	Class     string `json:"class"`
+	School    string `json:"school"`
+	Phone     string `json:"phone"`
+	LibraryId int64  `json:"libraryId,string"`
+	UserId    int64  `json:"userId,string"`
+	Site      string `json:"site"`
+	Time      string `json:"time"`
+	//Library   Library `xorm:"-" json:"library"`
+}
+type UserDTO struct {
+	User
 }

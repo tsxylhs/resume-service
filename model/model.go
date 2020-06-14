@@ -29,6 +29,35 @@ type Base struct {
 //		fmt.Print("初始化失败", err)
 //	}
 //}
+type User struct {
+	Base     `xorm:"extends"`
+	Username string `json:"username" form:"username"`
+	Password string `json:"password" form:"password"`
+	Nickname string `json:"nickname" form:"nickname"`
+	Email    string `json:"email" form:"email"`
+	Mcc      string `json:"-" form:"mcc"`
+	Mobile   string `json:"mobile" form:"mobile"`
+	AvatarId string `json:"-"`
+	Language int    `json:"-"`
+	OpenId   string
+	RoleIds  []string
+	Groups   []string
+	OrgId    int64 `json:",string"`
+	Status   int
+	IdNo     string `json:"idNo" form:"idNo"` // 身份证号码
+	Code     string ` xorm:"-" json:"code"`
+}
+type Role struct {
+	Id          string
+	Name        string `json:"name" form:"name"`
+	Code        string `form:"code"`
+	Permissions []string
+	Description string    `json:"description" form:"description"`
+	Crt         time.Time `json:"crt"`
+	Lut         time.Time `json:"-"`
+	Dtd         bool
+	OwnerId     int64
+}
 
 type ProjectExprience struct {
 	Base       `xorm:"extends"`
