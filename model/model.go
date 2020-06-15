@@ -2,6 +2,9 @@ package model
 
 import (
 	"github.com/bwmarrin/snowflake"
+
+	//"lncios.cn/resume/cs"
+
 	//"lncios.cn/resume/cs"
 	"time"
 )
@@ -15,20 +18,6 @@ type Base struct {
 	Dtd bool      `xorm:"dtd" json:"-"`
 }
 
-//func NewBD() {
-//	if err := cs.Sql.Sync(
-//		new(User),
-//		new(Library),
-//		new(Table),
-//		new(Cabinet),
-//		new(Message),
-//		new(Books),
-//		new(MyBook),
-//		new(Apply),
-//		new(Notes)); err != nil {
-//		fmt.Print("初始化失败", err)
-//	}
-//}
 type User struct {
 	Base     `xorm:"extends"`
 	Username string `json:"username" form:"username"`
@@ -39,11 +28,14 @@ type User struct {
 	Mobile   string `json:"mobile" form:"mobile"`
 	AvatarId string `json:"-"`
 	Language int    `json:"-"`
+	ImageOne string `json:"imageOne"`
+	ImageTwo string `json:"imageTwo"`
 	OpenId   string
 	RoleIds  []string
 	Groups   []string
 	OrgId    int64 `json:",string"`
 	Status   int
+	Content  string `json:"content"`
 	IdNo     string `json:"idNo" form:"idNo"` // 身份证号码
 	Code     string ` xorm:"-" json:"code"`
 }
@@ -58,7 +50,12 @@ type Role struct {
 	Dtd         bool
 	OwnerId     int64
 }
-
+type Message struct {
+	Base     `xorm:"extends"`
+	Commpany string `json:"commpany"`
+	Email    string `json:"email"`
+	Content  string `json:"content"`
+}
 type ProjectExprience struct {
 	Base       `xorm:"extends"`
 	Title      string `json:"title" form:"title"`
@@ -76,7 +73,7 @@ type WorkExprience struct {
 }
 type Education struct {
 	Base    `xorm:"extends"`
-	name    string `json:"name"`
+	Name    string `json:"name"`
 	Harvest string `json:"harvest"`
 }
 type Page struct {

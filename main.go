@@ -22,7 +22,7 @@ var (
 
 func main() {
 	//将数据库拉起
-	params := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=true", "lib", "lib123", "47.103.212.217:3306", "libDemo")
+	params := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=true", "lhs", "123321", "39.100.19.104:3306", "resume")
 	var err error
 	//连接数据库
 	cs.Sql, err = xorm.NewEngine("mysql", params)
@@ -30,17 +30,28 @@ func main() {
 		panic(err)
 	}
 	//首次运行时加载
-	//model.NewBD()
+	//	if err := cs.Sql.Sync(
+	//		new(model.User),
+	//		new(model.Role),
+	//		new(model.ProjectExprience),
+	//		new(model.WorkExprience),
+	//		new(model.Message),
+	//		new(model.Education)); err != nil {
+	//		fmt.Print("初始化失败", err)
+	//
+	//}
+
 	//启动基础的Http服务
 	cs.SessionMgr = newSession.NewSessionMgr("Cookies", 3600)
 	app := gin.Default()
 	root := app.Group("/api")
 	root.Use(middleware.CorsHandler())
+	app.Use(middleware.CorsHandler())
 	router.Register(root, wechat.User)
 	router.Register(root, rest.User)
 
 	server := &http.Server{
-		Addr:         ":3001",
+		Addr:         "localhost:3001",
 		Handler:      app,
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
