@@ -29,7 +29,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	//首次运行时加载
+	////首次运行时加载
 	//	if err := cs.Sql.Sync(
 	//		new(model.User),
 	//		new(model.Role),
@@ -49,7 +49,10 @@ func main() {
 	app.Use(middleware.CorsHandler())
 	router.Register(root, wechat.User)
 	router.Register(root, rest.User)
-
+	router.Register(root, rest.ProjectExprience)
+	router.Register(root, rest.WorkExprience)
+	router.Register(root, rest.Message)
+	router.Register(root, rest.Education)
 	server := &http.Server{
 		Addr:         "localhost:3001",
 		Handler:      app,

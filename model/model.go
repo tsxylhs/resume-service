@@ -2,7 +2,6 @@ package model
 
 import (
 	"github.com/bwmarrin/snowflake"
-
 	//"lncios.cn/resume/cs"
 
 	//"lncios.cn/resume/cs"
@@ -62,6 +61,7 @@ type ProjectExprience struct {
 	SubTitle   string `json:"subTitle" form:"subTitle"`
 	CoverImage string `json:"coverImage" from:"coverImage"`
 	Content    string `json:"content" from:"content"`
+	Kind       string `json:"kind"`
 }
 type WorkExprience struct {
 	Base      `xorm:"extends"`
