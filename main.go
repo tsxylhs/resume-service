@@ -8,6 +8,7 @@ import (
 	"golang.org/x/sync/errgroup"
 	"lncios.cn/resume/cs"
 	"lncios.cn/resume/middleware"
+	"lncios.cn/resume/model"
 	"lncios.cn/resume/newSession"
 	"lncios.cn/resume/rest"
 	"lncios.cn/resume/rest/wechat"
@@ -25,21 +26,18 @@ func main() {
 	params := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=true", "lhs", "123321", "39.100.19.104:3306", "resume")
 	var err error
 	//连接数据库
+
 	cs.Sql, err = xorm.NewEngine("mysql", params)
+	cs.Sql.ShowSQL(true)
 	if err != nil {
 		panic(err)
 	}
-	////首次运行时加载
-	//	if err := cs.Sql.Sync(
-	//		new(model.User),
-	//		new(model.Role),
-	//		new(model.ProjectExprience),
-	//		new(model.WorkExprience),
-	//		new(model.Message),
-	//		new(model.Education)); err != nil {
-	//		fmt.Print("初始化失败", err)
-	//
-	//}
+	//首次运行时加载
+	if err := cs.Sql.Sync(
+		new(model.Resume)); err != nil {
+		fmt.Print("初始化失败", err)
+
+	}
 
 	//启动基础的Http服务
 	cs.SessionMgr = newSession.NewSessionMgr("Cookies", 3600)

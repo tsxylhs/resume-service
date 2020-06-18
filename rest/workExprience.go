@@ -52,15 +52,17 @@ func (workExprience) list(c *gin.Context) {
 		c.Abort()
 		return
 	}
+	r := make(map[string]interface{})
 	users := &[]model.WorkExprience{}
 	if err := service.WorkExprience.List(page, workExprience, users); err != nil {
 		c.String(500, "新增失败")
 		c.Abort()
 		return
 	} else {
-		c.JSON(200, users)
+		r["data"] = users
+		r["page"] = page
+		c.JSON(200, r)
 	}
-
 }
 func (workExprience) delete(c *gin.Context) {
 	workExprience := &model.WorkExprience{}
@@ -92,7 +94,7 @@ func (workExprience) get(c *gin.Context) {
 }
 func (workExprience) Register(c *gin.RouterGroup) {
 	c.POST("/v1/work", WorkExprience.create)
-	c.PUT("/v1/work", WorkExprience.updata)
+	c.PUT("/v1/work/:id", WorkExprience.updata)
 	c.GET("/v1/work", WorkExprience.list)
 	c.GET("/v1/work/:id", WorkExprience.get)
 	c.DELETE("v1/work", WorkExprience.delete)

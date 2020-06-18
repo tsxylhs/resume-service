@@ -19,35 +19,36 @@ type Base struct {
 
 type User struct {
 	Base     `xorm:"extends"`
-	Username string `json:"username" form:"username"`
-	Password string `json:"password" form:"password"`
-	Nickname string `json:"nickname" form:"nickname"`
-	Email    string `json:"email" form:"email"`
-	Mcc      string `json:"-" form:"mcc"`
-	Mobile   string `json:"mobile" form:"mobile"`
-	AvatarId string `json:"-"`
-	Language int    `json:"-"`
-	ImageOne string `json:"imageOne"`
-	ImageTwo string `json:"imageTwo"`
-	OpenId   string
-	RoleIds  []string
-	Groups   []string
-	OrgId    int64 `json:",string"`
-	Status   int
-	Content  string `json:"content"`
-	IdNo     string `json:"idNo" form:"idNo"` // 身份证号码
-	Code     string ` xorm:"-" json:"code"`
+	Username string   `json:"username" form:"username"`
+	Password string   `json:"password" form:"password"`
+	Nickname string   `json:"nickname" form:"nickname"`
+	Email    string   `json:"email" form:"email"`
+	Mcc      string   `json:"-" form:"mcc"`
+	Mobile   string   `json:"mobile" form:"mobile"`
+	AvatarId string   `json:"-"`
+	Language int      `json:"-"`
+	ImageOne string   `json:"imageOne"`
+	ImageTwo string   `json:"imageTwo"`
+	OpenId   string   `json:"openId"`
+	RoleIds  []string `json:"roleIds"`
+	Groups   []string `json:"groups"`
+	OrgId    int64    `json:",string"`
+	Status   int      `json:"status"`
+	Content  string   `json:"content"`
+	IdNo     string   `json:"idNo" form:"idNo"` // 身份证号码
+	Code     string   ` xorm:"-" json:"code"`
+	Roles    []Role   `xorm:"-" json:"roles" `
 }
 type Role struct {
 	Id          string
-	Name        string `json:"name" form:"name"`
-	Code        string `form:"code"`
-	Permissions []string
+	Name        string    `json:"name" form:"name"`
+	Code        string    `form:"code"`
+	Permissions []string  `json:"permissions"`
 	Description string    `json:"description" form:"description"`
 	Crt         time.Time `json:"crt"`
 	Lut         time.Time `json:"-"`
-	Dtd         bool
-	OwnerId     int64
+	Dtd         bool      `json:"dtd"`
+	OwnerId     int64     `json:"ownerId"`
 }
 type Message struct {
 	Base     `xorm:"extends"`
@@ -57,24 +58,30 @@ type Message struct {
 }
 type ProjectExprience struct {
 	Base       `xorm:"extends"`
+	Name       string `json:"name"`
 	Title      string `json:"title" form:"title"`
 	SubTitle   string `json:"subTitle" form:"subTitle"`
 	CoverImage string `json:"coverImage" from:"coverImage"`
 	Content    string `json:"content" from:"content"`
 	Kind       string `json:"kind"`
+	No         int    `json:"no,string"`
 }
 type WorkExprience struct {
-	Base      `xorm:"extends"`
-	Commpany  string    `json:"commpany"`
-	Jobs      string    `json:"jobs"`
-	StartTime time.Time `json:"startTime"`
-	EndTime   time.Time `json:"endTime"`
-	Harvest   string    `json:"harvest"`
+	Base        `xorm:"extends"`
+	Commpany    string    `xorm:"commpany" json:"commpany"`
+	Jobs        string    `json:"jobs"`
+	StartTime   time.Time `json:"startTime"`
+	EndTime     time.Time `json:"endTime"`
+	Harvest     string    `json:"harvest"`
+	LegalPerson string    `json:"legalPerson"`
+	Phone       string    `json:"phone"`
+	No          int       `json:"no,string"`
 }
 type Education struct {
 	Base    `xorm:"extends"`
 	Name    string `json:"name"`
 	Harvest string `json:"harvest"`
+	No      int    `json:"no,string"`
 }
 type Page struct {
 	P   int    `json:"p" form:"p"`
@@ -83,6 +90,16 @@ type Page struct {
 	K   string `josn:"k"`
 	Pc  int    `json:"pc"`
 	Od  string `json:"od,omitempty"`
+}
+type Resume struct {
+	Base      `xorm:"extends"`
+	Name      string `json:"name"`
+	Version   string `json:"version"`
+	Path      string `json:"path"`
+	Size      int64  `json:"size"`
+	Desc      string `json:"desc"`
+	IsPublish bool   `json:"isPublish"`
+	Type      string `json:"type"`
 }
 
 func (page *Page) GetPage() *Page {

@@ -125,7 +125,7 @@ func (mgr *SessionMgr) GetUserId(c *gin.Context) (id int64) {
 	}
 	sessionID := cookie.Value
 	if val, ok := mgr.GetSessionVal(sessionID, "UserInfo"); ok {
-		user := val.(*model.User)
+		user := val.(model.User)
 		return user.Id
 	} else {
 		return 0
