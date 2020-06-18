@@ -125,7 +125,7 @@ func (mgr *SessionMgr) GetUserId(c *gin.Context) (id int64) {
 	}
 	sessionID := cookie.Value
 	if val, ok := mgr.GetSessionVal(sessionID, "UserInfo"); ok {
-		user := val.(*model.UserDTO)
+		user := val.(*model.User)
 		return user.Id
 	} else {
 		return 0
@@ -142,7 +142,7 @@ func (mgr *SessionMgr) GetUserName(c *gin.Context) string {
 	}
 	sessionID := cookie.Value
 	if val, ok := mgr.GetSessionVal(sessionID, "UserInfo"); ok {
-		user := val.(*model.UserDTO)
+		user := val.(*model.User)
 		return user.Username
 	} else {
 		return ""
@@ -150,7 +150,7 @@ func (mgr *SessionMgr) GetUserName(c *gin.Context) string {
 }
 
 // 获取用户名
-func (mgr *SessionMgr) getUserInfo(c *gin.Context) *model.UserDTO {
+func (mgr *SessionMgr) getUserInfo(c *gin.Context) *model.User {
 	var cookie, err = c.Request.Cookie(mgr.mCookieName)
 	if cookie == nil ||
 		err != nil {
@@ -159,7 +159,7 @@ func (mgr *SessionMgr) getUserInfo(c *gin.Context) *model.UserDTO {
 	}
 	sessionID := cookie.Value
 	if val, ok := mgr.GetSessionVal(sessionID, "UserInfo"); ok {
-		user := val.(*model.UserDTO)
+		user := val.(*model.User)
 		return user
 	} else {
 		return nil

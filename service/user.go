@@ -13,7 +13,7 @@ type user int
 
 func (user) Login(form *model.User) (model.User, bool) {
 	selectUser := &model.User{}
-	if _, err := cs.Sql.Table("user").Where("dtd =false and username=?", form.Username).Get(selectUser); err != nil {
+	if _, err := cs.Sql.Table("user").Where("username=?", form.Username).Get(selectUser); err != nil {
 		return *selectUser, false
 	}
 	if selectUser.Id > 0 {

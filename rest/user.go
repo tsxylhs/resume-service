@@ -1,7 +1,9 @@
 package rest
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"lncios.cn/resume/cs"
 	"lncios.cn/resume/model"
 	"lncios.cn/resume/service"
 	"strconv"
@@ -19,6 +21,10 @@ func (user) login(c *gin.Context) {
 		return
 	}
 	if user, ok := service.User.Login(user); ok {
+		var sessionID = cs.SessionMgr.StartSession(c.Writer, c.Request)
+
+		//设置变量值
+		cs.SessionMgr.SetSessionVal(sessionID, "UserInfo", &user)
 		c.JSON(200, user)
 	} else {
 		c.String(500, "用户信息错误")
@@ -106,7 +112,12 @@ func (user) get(c *gin.Context) {
 		c.JSON(200, user)
 	}
 }
+func (user) Me(c *gin.Context) {
+	id := cs.SessionMgr.GetUserId(c)
+	fmt.Print(id)
+}
 func (user) Register(c *gin.RouterGroup) {
+	c.GET("/me", cs.SessionMgr.CheckCookieValid, User.Me)
 	c.POST("/v1/web/login", User.login)
 	c.POST("/v1/web/create", User.create)
 	c.PUT("/v1/web", User.updata)
