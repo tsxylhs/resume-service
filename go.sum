@@ -84,6 +84,7 @@ github.com/golang/groupcache v0.0.0-20190129154638-5b532d6fd5ef/go.mod h1:cIg4er
 github.com/golang/image v0.0.0-20181116024801-cd38e8056d9b/go.mod h1:W3cvIh6MZCq53QRt4EH8hvU9HPLAPXNxfcoJxCiaTV4=
 github.com/golang/lint v0.0.0-20181026193005-c67002cb31c3/go.mod h1:tluoj9z5200jBnyusfRPU2LqT6J+DAorxEvtC7LHB+E=
 github.com/golang/mock v1.1.1/go.mod h1:oTYuIxOrZwtPieC+H1uAHpcLFnEyAGVDL/k47Jfbm0A=
+github.com/golang/net v0.0.0-20181114220301-adae6a3d119a h1:wxhJMi186V9aI731PnbZnsQ1aE0hEeDc/Gf9tTNIssU=
 github.com/golang/net v0.0.0-20181114220301-adae6a3d119a/go.mod h1:98y8FxUyMjTdJ5eOj/8vzuiVO14/dkJ98NYhEPG8QGY=
 github.com/golang/oauth2 v0.0.0-20181128211412-28207608b838/go.mod h1:ovBFgdmJqyggKzXS0i5+osE+RsPEbEsUfp2sVCgys1Q=
 github.com/golang/protobuf v1.2.0 h1:P3YflyNX/ehuJFLhxviNdFxQPkGK5cDcApsge1SqnvM=
@@ -95,6 +96,7 @@ github.com/golang/sync v0.0.0-20181108010431-42b317875d0f h1:vuwODIDRvDgwjIl6VTM
 github.com/golang/sync v0.0.0-20181108010431-42b317875d0f/go.mod h1:YCHYtYb9c8Q7XgYVYjmJBPtFPKx5QvOcPxHZWjldabE=
 github.com/golang/sys v0.0.0-20181116161606-93218def8b18 h1:X/8K5a3so/oak+vR98xG2nGzNHcXtGSeXA2Wi4PkkUI=
 github.com/golang/sys v0.0.0-20181116161606-93218def8b18/go.mod h1:5JyrLPvD/ZdaYkT7IqKhsP5xt7aLjA99KXRtk4EIYDk=
+github.com/golang/text v0.3.1-0.20181030141323-6f44c5a2ea40 h1:wEYKvyVhPZI7TIBEC7iPJlvPVNFS9h7waapFajjSFVE=
 github.com/golang/text v0.3.1-0.20181030141323-6f44c5a2ea40/go.mod h1:bEr9sfX3Q8Zfm5fL9x+3itogRgK3+ptLWKqgva+5dAk=
 github.com/golang/time v0.0.0-20181108054448-85acf8d2951c/go.mod h1:Goyxmr1dEyuE8J10MyNptB/4WJaypDxCpNr2pf27wjI=
 github.com/golang/tools v0.0.0-20181117154741-2ddaf7f79a09/go.mod h1:BZR6KJOI/IQ5FlSQroxL7yevEMRCz1dARTXHD9s4mHE=

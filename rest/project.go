@@ -5,6 +5,7 @@ import (
 	"lncios.cn/resume/model"
 	"lncios.cn/resume/service"
 	"strconv"
+	"strings"
 )
 
 type projectExprience int
@@ -52,13 +53,16 @@ func (projectExprience) list(c *gin.Context) {
 		c.Abort()
 		return
 	}
+	r := make(map[string]interface{})
 	users := &[]model.ProjectExprience{}
 	if err := service.ProjectExprience.List(page, projectExprience, users); err != nil {
 		c.String(500, "新增失败")
 		c.Abort()
 		return
 	} else {
-		c.JSON(200, users)
+		r["data"] = users
+		r["page"] = page
+		c.JSON(200, r)
 	}
 
 }
@@ -90,10 +94,32 @@ func (projectExprience) get(c *gin.Context) {
 		c.JSON(200, projectExprience)
 	}
 }
+func (projectExprience) uploadImage(c *gin.Context) {
+	file, h, err := c.Request.FormFile("file")
+	if err != nil {
+
+		c.String(400, "未找到file文件")
+		c.Abort()
+		return
+	}
+	form := &model.File{}
+	form.OriginName = h.Filename[:strings.Index(h.Filename, ".")]
+	form.Suffix = h.Filename[strings.Index(h.Filename, "."):]
+	// 保存成为新的记录
+	if err := service.ProjectExprience.UploadFile(form, file); err != nil {
+
+		c.String(500, "保存失败")
+		c.Abort()
+		return
+	}
+	// 保存成功后返回新的记录
+	c.JSON(200, form)
+}
 func (projectExprience) Register(c *gin.RouterGroup) {
 	c.POST("/v1/project", ProjectExprience.create)
-	c.PUT("/v1/project", ProjectExprience.updata)
+	c.PUT("/v1/project/:id", ProjectExprience.updata)
 	c.GET("/v1/project", ProjectExprience.list)
 	c.GET("/v1/project/:id", ProjectExprience.get)
 	c.DELETE("v1/project", ProjectExprience.delete)
+	c.POST("/v1/file", ProjectExprience.uploadImage)
 }

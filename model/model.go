@@ -63,7 +63,7 @@ type ProjectExprience struct {
 	SubTitle   string `json:"subTitle" form:"subTitle"`
 	CoverImage string `json:"coverImage" from:"coverImage"`
 	Content    string `json:"content" from:"content"`
-	Kind       string `json:"kind"`
+	Kind       string `json:"kind" form:"kind"`
 	No         int    `json:"no,string"`
 }
 type WorkExprience struct {
@@ -87,7 +87,7 @@ type Page struct {
 	P   int    `json:"p" form:"p"`
 	Ps  int    `json:"ps" form:"ps"`
 	Cnt int64  `json:"cnt"`
-	K   string `josn:"k"`
+	K   string `json:"k" form:"k"`
 	Pc  int    `json:"pc"`
 	Od  string `json:"od,omitempty"`
 }
@@ -132,6 +132,21 @@ func (page *Page) Limit() int {
 	}
 
 	return 10
+}
+
+type NameAndDesc struct {
+	Name        string `xorm:"name" json:"name" form:"name"`                      // 名称
+	Description string `xorm:"description" json:"description" form:"description"` // 详细描述
+}
+type File struct {
+	Base         `xorm:"extends"`
+	NameAndDesc  `xorm:"extends"`
+	PrefixUri    string `json:"prefixUri"`    // 网络地址
+	RelativePath string `json:"relativePath"` // 绝对路径
+	Kind         string `json:"kind"`         // 类型
+	OriginName   string `json:"originName"`   // 原始文件名
+	Suffix       string `json:"suffix"`       // 后缀
+	UniqueName   string `json:"uniqueName"`
 }
 
 func (b *Base) BeforeInsert() {
